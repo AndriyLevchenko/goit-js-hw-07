@@ -10,9 +10,11 @@ console.log (createImageGalleryMarcup (galleryItems));
 function createImageGalleryMarcup (galleryItems) {
     return galleryItems.map(({preview, original, description}) => {
         return `
-        <a class="gallery__item" href="${original}">
+        <li class="gallery__item">
+        <a class="gallery__link" href="${original}">
         <img class="gallery__image" src="${preview}" alt="${description}" />
         </a>
+        </li>
         `;
     }).join('');
 }
@@ -21,24 +23,10 @@ const galleryContainer = document.querySelector('.gallery');
 const galleryMarcup = createImageGalleryMarcup (galleryItems);
 galleryContainer.insertAdjacentHTML('afterbegin', galleryMarcup);
 
-// 2 Делегування та відкриття модального вікна по кліку на елементі галереї. 
-
-galleryContainer.addEventListener('click', onGalleryContainerClick)
-
-function onGalleryContainerClick (evt) {
-    evt.preventDefault();
-    const isGalleryEl = evt.target.classList.contains('gallery__image');
-    if (!isGalleryEl){
-        return
-    }
-
-    const resourceUrl = evt.target.dataset.source;
-    console.log(resourceUrl);
-     
-}
+// 2 
 
 new SimpleLightbox('.gallery a', 
 {captionsData: 'alt', 
 captionPosition: 'bottom',
-fadeSpeed: 250});
+captionDelay: 250});
 
